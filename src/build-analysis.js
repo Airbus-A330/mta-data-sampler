@@ -22,3 +22,15 @@ const INPUTS = {
 /**
  * Research-facing scoring constants used for Phase I aggregation.
  *
+ * @type {Readonly<{
+ *   sis: {stress: number, comfort: number, safety: number},
+ *   satisfaction: {comfort: number, safety: number, affect: number},
+ *   phase1Stress: {negativeAffect: number, arousal: number}
+ * }>}
+ */
+const SCORE_WEIGHTS = Object.freeze({
+  sis: {
+    stress: 1,
+    comfort: 1,
+    safety: 1,
+  },
