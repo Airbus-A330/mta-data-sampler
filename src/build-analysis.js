@@ -69,3 +69,15 @@ function readCsv(filePath) {
     relax_column_count: true,
     trim: true,
   });
+}
+
+/**
+ * Ensures a directory exists before file output.
+ *
+ * @param {string} directoryPath
+ */
+function ensureDirectory(directoryPath) {
+  fs.mkdirSync(directoryPath, { recursive: true });
+}
+
+/**
