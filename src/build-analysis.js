@@ -57,3 +57,15 @@ function readJson(filePath) {
 
 /**
  * Reads the Qualtrics CSV export into plain objects.
+ *
+ * @param {string} filePath
+ * @returns {Record<string, string>[]}
+ */
+function readCsv(filePath) {
+  const rawCsv = fs.readFileSync(filePath, 'utf8');
+  return parse(rawCsv, {
+    columns: true,
+    skip_empty_lines: true,
+    relax_column_count: true,
+    trim: true,
+  });
