@@ -116,3 +116,14 @@ function buildStationKey(stationName) {
  * @returns {number | null}
  */
 function toNumber(value) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
+/**
+ * Parses Qualtrics date cells, which may be ISO-like text or Excel serial
+ * numbers depending on the export settings.
+ *
+ * @param {string} value
+ * @returns {string | null}
+ */
