@@ -81,3 +81,14 @@ function ensureDirectory(directoryPath) {
 }
 
 /**
+ * Parses station display names into stable metadata fields.
+ *
+ * @param {string} stationName
+ * @returns {{complexName: string, lineGroup: string | null}}
+ */
+function parseStationDisplayName(stationName) {
+  const cleaned = normalizeEncoding(stationName).replace(/\s+-\s+/g, ' — ');
+  const segments = cleaned.split(/\s+—\s+/);
+
+  return {
+    complexName: segments[0]?.trim() ?? cleaned,
