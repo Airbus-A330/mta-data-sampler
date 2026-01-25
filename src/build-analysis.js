@@ -151,3 +151,15 @@ function normalizeDate(value) {
  *   count: number,
  *   min: number | null,
  *   max: number | null,
+ *   average: number | null,
+ *   median: number | null,
+ *   standardDeviation: number | null,
+ *   range: number | null,
+ *   histogram7: Record<string, number>
+ * }}
+ */
+function calculateStats(values) {
+  if (values.length === 0) {
+    return {
+      count: 0,
+      min: null,
