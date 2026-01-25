@@ -138,3 +138,16 @@ function normalizeDate(value) {
     const millis = excelEpochMs + numeric * 24 * 60 * 60 * 1000;
     return new Date(millis).toISOString();
   }
+
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
+}
+
+/**
+ * Calculates descriptive statistics for numeric arrays.
+ *
+ * @param {number[]} values
+ * @returns {{
+ *   count: number,
+ *   min: number | null,
+ *   max: number | null,
