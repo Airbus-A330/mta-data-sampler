@@ -174,3 +174,14 @@ function calculateStats(values) {
 
   const sorted = [...values].sort((left, right) => left - right);
   const average = sorted.reduce((sum, value) => sum + value, 0) / sorted.length;
+  const variance = sorted.reduce((sum, value) => sum + (value - average) ** 2, 0) / sorted.length;
+  const midpoint = Math.floor(sorted.length / 2);
+  const median = sorted.length % 2 === 0
+    ? (sorted[midpoint - 1] + sorted[midpoint]) / 2
+    : sorted[midpoint];
+
+  const histogram7 = sorted.reduce((accumulator, value) => {
+    const key = String(value);
+    accumulator[key] = (accumulator[key] ?? 0) + 1;
+    return accumulator;
+  }, {});
