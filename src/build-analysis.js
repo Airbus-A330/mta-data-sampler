@@ -210,3 +210,14 @@ function countByField(items, field) {
 
   for (const item of items) {
     const rawValue = item[field];
+    if (!rawValue) {
+      continue;
+    }
+
+    const parts = String(rawValue)
+      .split(',')
+      .map((part) => normalizeEncoding(part).trim())
+      .filter(Boolean);
+
+    for (const part of parts) {
+      counts.set(part, (counts.get(part) ?? 0) + 1);
