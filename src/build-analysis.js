@@ -233,3 +233,15 @@ function countByField(items, field) {
  * Summarizes emotion or topic labels across exposures.
  *
  * @param {Array<Record<string, any>>} exposures
+ * @param {'emotionLabels' | 'topicLabels'} labelField
+ * @returns {Array<{id: string, label: string, count: number, responseShare: number, averageValence?: number}>}
+ */
+function summarizeLabels(exposures, labelField) {
+  const totals = new Map();
+  const exposureCount = exposures.length || 1;
+
+  for (const exposure of exposures) {
+    for (const label of exposure.affect[labelField]) {
+      const previous = totals.get(label.id) ?? {
+        id: label.id,
+        label: label.label,
