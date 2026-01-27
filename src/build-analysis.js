@@ -221,3 +221,15 @@ function countByField(items, field) {
 
     for (const part of parts) {
       counts.set(part, (counts.get(part) ?? 0) + 1);
+    }
+  }
+
+  return [...counts.entries()]
+    .map(([label, count]) => ({ label, count }))
+    .sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
+}
+
+/**
+ * Summarizes emotion or topic labels across exposures.
+ *
+ * @param {Array<Record<string, any>>} exposures
