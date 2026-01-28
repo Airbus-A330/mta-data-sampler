@@ -280,3 +280,14 @@ function summarizeLabels(exposures, labelField) {
  */
 function bootstrapMeanInterval(values, iterations = 400) {
   if (values.length < 2) {
+    return { lower: null, upper: null };
+  }
+
+  const means = [];
+  for (let index = 0; index < iterations; index += 1) {
+    let total = 0;
+    for (let sample = 0; sample < values.length; sample += 1) {
+      total += values[Math.floor(Math.random() * values.length)];
+    }
+    means.push(total / values.length);
+  }
