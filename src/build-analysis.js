@@ -255,3 +255,16 @@ function summarizeLabels(exposures, labelField) {
         previous.valenceTotal += label.valence * label.count;
         previous.valenceHits += label.count;
       }
+
+      totals.set(label.id, previous);
+    }
+  }
+
+  return [...totals.values()]
+    .map((item) => ({
+      id: item.id,
+      label: item.label,
+      count: item.count,
+      responseShare: item.count / exposureCount,
+      averageValence: item.valenceHits > 0 ? item.valenceTotal / item.valenceHits : undefined,
+    }))
