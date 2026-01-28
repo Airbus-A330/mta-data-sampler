@@ -268,3 +268,15 @@ function summarizeLabels(exposures, labelField) {
       responseShare: item.count / exposureCount,
       averageValence: item.valenceHits > 0 ? item.valenceTotal / item.valenceHits : undefined,
     }))
+    .sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
+}
+
+/**
+ * Calculates a simple percentile bootstrap confidence interval around a mean.
+ *
+ * @param {number[]} values
+ * @param {number} [iterations=400]
+ * @returns {{lower: number | null, upper: number | null}}
+ */
+function bootstrapMeanInterval(values, iterations = 400) {
+  if (values.length < 2) {
