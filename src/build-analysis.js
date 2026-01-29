@@ -291,3 +291,15 @@ function bootstrapMeanInterval(values, iterations = 400) {
     }
     means.push(total / values.length);
   }
+
+  means.sort((left, right) => left - right);
+
+  return {
+    lower: means[Math.floor(iterations * 0.025)] ?? null,
+    upper: means[Math.floor(iterations * 0.975)] ?? null,
+  };
+}
+
+/**
+ * Maps an affect valence value from [-1, 1] to [0, 1].
+ *
