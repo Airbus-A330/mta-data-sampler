@@ -350,3 +350,15 @@ function computeSatisfactionScore(input) {
  * @param {number[]} values
  * @returns {number[]}
  */
+function zScore(values) {
+  if (values.length === 0) {
+    return [];
+  }
+
+  const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+  const variance = values.reduce((sum, value) => sum + (value - mean) ** 2, 0) / values.length;
+  const standardDeviation = Math.sqrt(variance);
+
+  if (standardDeviation === 0) {
+    return values.map(() => 0);
+  }
