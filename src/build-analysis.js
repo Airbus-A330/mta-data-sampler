@@ -362,3 +362,15 @@ function zScore(values) {
   if (standardDeviation === 0) {
     return values.map(() => 0);
   }
+
+  return values.map((value) => (value - mean) / standardDeviation);
+}
+
+/**
+ * Adds SIS scores in-place to a homogeneous collection of summaries.
+ *
+ * @param {Array<Record<string, any>>} summaries
+ */
+function attachSubliminalIndexScores(summaries) {
+  const stressValues = summaries.map((summary) => summary.aggregateMetrics.phase1Stress.average ?? 0);
+  const comfortValues = summaries.map((summary) => summary.aggregateMetrics.comfort.average ?? 0);
