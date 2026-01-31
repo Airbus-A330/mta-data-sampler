@@ -385,3 +385,14 @@ function attachSubliminalIndexScores(summaries) {
       SCORE_WEIGHTS.sis.stress * stressZ[index] -
       SCORE_WEIGHTS.sis.comfort * comfortZ[index] -
       SCORE_WEIGHTS.sis.safety * safetyZ[index];
+
+    summary.aggregateMetrics.subliminalIndexScore = {
+      value: sisValue,
+      zComponents: {
+        stress: stressZ[index],
+        comfort: comfortZ[index],
+        safety: safetyZ[index],
+      },
+    };
+  });
+}
