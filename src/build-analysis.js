@@ -421,3 +421,14 @@ function buildAggregateSummary(exposures, metadata) {
     participantCount: new Set(participants.map((item) => item.participantId)).size,
     aggregateMetrics: {
       comfort: {
+        ...calculateStats(comfortValues),
+        confidenceInterval95: bootstrapMeanInterval(comfortValues),
+      },
+      safety: {
+        ...calculateStats(safetyValues),
+        confidenceInterval95: bootstrapMeanInterval(safetyValues),
+      },
+      affectValence: {
+        ...calculateStats(valenceValues),
+        confidenceInterval95: bootstrapMeanInterval(valenceValues),
+      },
