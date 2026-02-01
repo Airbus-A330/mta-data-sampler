@@ -432,3 +432,15 @@ function buildAggregateSummary(exposures, metadata) {
         ...calculateStats(valenceValues),
         confidenceInterval95: bootstrapMeanInterval(valenceValues),
       },
+      affectArousal: {
+        ...calculateStats(arousalValues),
+        confidenceInterval95: bootstrapMeanInterval(arousalValues),
+      },
+      phase1Stress: {
+        ...calculateStats(phase1StressValues),
+        confidenceInterval95: bootstrapMeanInterval(phase1StressValues),
+      },
+      satisfactionScore: {
+        ...calculateStats(satisfactionValues),
+        confidenceInterval95: bootstrapMeanInterval(satisfactionValues),
+      },
