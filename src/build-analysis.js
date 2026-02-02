@@ -456,3 +456,14 @@ function buildAggregateSummary(exposures, metadata) {
     participantProfile: {
       ageGroups: countByField(participants, 'ageGroup'),
       genders: countByField(participants, 'gender'),
+      ethnicities: countByField(participants, 'ethnicity'),
+      subwayFrequency: countByField(participants, 'frequency'),
+      boroughs: countByField(participants, 'borough'),
+    },
+    dataQuality: {
+      uncategorizedAffectResponses: exposures.filter((item) => item.affect.uncategorized).length,
+      emptyAffectResponses: exposures.filter((item) => item.affect.filteredTokens.length === 0).length,
+      averageAffectTokenCount:
+        exposures.reduce((sum, item) => sum + item.affect.filteredTokens.length, 0) / (exposures.length || 1),
+    },
+  };
