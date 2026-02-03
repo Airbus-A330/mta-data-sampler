@@ -503,3 +503,14 @@ function main() {
       const safety = toNumber(row.Safety);
 
       if (!stimulusId || comfort === null || safety === null) {
+        return null;
+      }
+
+      const affect = analyzeAffect(row.Feelings ?? '');
+      const stationName = stimulusToStation.get(stimulusId) ?? 'Unknown Station';
+      const stationDisplay = parseStationDisplayName(stationName);
+      const participantId = String(row['Response ID'] ?? '').trim();
+      const participant = {
+        participantId,
+        ageGroup: normalizeEncoding(row['Age Group'] ?? ''),
+        gender: normalizeEncoding(row.Gender ?? ''),
