@@ -538,3 +538,14 @@ function main() {
         safety,
         affect,
         phase1StressProxy: computePhase1StressProxy(affect),
+        satisfactionScore: computeSatisfactionScore({
+          comfort,
+          safety,
+          valence: affect.valence,
+        }),
+        timings: {
+          startDate: normalizeDate(row['Start Date']),
+          endDate: normalizeDate(row['End Date']),
+        },
+      };
+    })
