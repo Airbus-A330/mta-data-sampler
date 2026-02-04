@@ -561,3 +561,15 @@ function main() {
   logger.metric('Unique stimuli observed', new Set(exposures.map((item) => item.stimulusId)).size);
   logger.metric('Unique stations observed', new Set(exposures.map((item) => item.stationKey)).size);
   logger.metric('Image exposures', imageExposureCount);
+  logger.metric('Audio exposures', audioExposureCount);
+  logger.metric('Uncategorized affect rows', uncategorizedExposureCount);
+  logger.blank();
+
+  const stationGroups = new Map();
+  const stimulusGroups = new Map();
+
+  for (const exposure of exposures) {
+    if (!stationGroups.has(exposure.stationKey)) {
+      stationGroups.set(exposure.stationKey, []);
+    }
+    stationGroups.get(exposure.stationKey).push(exposure);
