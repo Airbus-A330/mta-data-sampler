@@ -643,3 +643,15 @@ function main() {
           stimulusIds: [...new Set(groupedExposures.map((item) => item.stimulusId))].sort((left, right) => Number(left) - Number(right)),
           stimulusTypes: [...new Set(groupedExposures.map((item) => item.stimulusType))].sort(),
         },
+        stimuli: [...new Set(groupedExposures.map((item) => item.stimulusId))]
+          .sort((left, right) => Number(left) - Number(right))
+          .map((stimulusId) => stimulusSummaryById.get(stimulusId)),
+      });
+    })
+    .sort((left, right) => left.stationName.localeCompare(right.stationName));
+
+  attachSubliminalIndexScores(stationSummaries);
+
+  logger.section('Station Aggregation');
+  logger.metric('Station summaries built', stationSummaries.length);
+  logger.metric(
