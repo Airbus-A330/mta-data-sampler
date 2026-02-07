@@ -678,3 +678,15 @@ function main() {
     metadata: {
       generatedAt: new Date().toISOString(),
       project: 'Subliminal Spaces',
+      phase: 'Phase I',
+      runtime: `Node ${process.version}`,
+      sourceFiles: INPUTS,
+      recordCounts: {
+        csvRows: csvRows.length,
+        validExposures: exposures.length,
+        uniqueParticipants: allParticipants.length,
+        uniqueStimuli: stimulusSummaries.length,
+        uniqueStations: stationSummaries.length,
+      },
+      scoring: {
+        sisEquation: 'SIS_s = w1 * Z(Stress_s) - w2 * Z(Comfort_s) - w3 * Z(Safety_s)',
