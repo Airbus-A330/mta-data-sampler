@@ -714,3 +714,13 @@ function main() {
         subwayFrequency: countByField(allParticipants, 'frequency'),
         boroughs: countByField(allParticipants, 'borough'),
       },
+      modalityBreakdown: countByField(exposures, 'stimulusType'),
+      satisfactionScore: calculateStats(exposures.map((item) => item.satisfactionScore)),
+      phase1Stress: calculateStats(exposures.map((item) => item.phase1StressProxy)),
+      uncategorizedAffectResponses: exposures.filter((item) => item.affect.uncategorized).length,
+    },
+    stations: stationSummaries,
+  };
+
+  ensureDirectory(path.dirname(INPUTS.outputPath));
+  fs.writeFileSync(INPUTS.outputPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
