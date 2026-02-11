@@ -59,3 +59,14 @@ function buildStemLookup(taxonomy) {
       });
     }
   }
+
+  return lookup;
+}
+
+const emotionStemLookup = buildStemLookup(EMOTION_TAXONOMY);
+const topicStemLookup = buildStemLookup(TOPIC_TAXONOMY);
+
+/**
+ * Replaces common mojibake artifacts observed in CSV and JSON exports.
+ *
+ * @param {string} value
