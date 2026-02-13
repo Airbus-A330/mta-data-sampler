@@ -121,3 +121,14 @@ function splitPhrases(text) {
  * @returns {Map<string, number>}
  */
 function collectLexiconHits(phrases, filteredTokens, taxonomy, stemLookup) {
+  const counts = new Map();
+
+  for (const phrase of phrases) {
+    for (const entry of taxonomy) {
+      for (const candidate of entry.phrases ?? []) {
+        if (phrase.includes(candidate.toLowerCase())) {
+          counts.set(entry.id, (counts.get(entry.id) ?? 0) + 1);
+        }
+      }
+    }
+  }
