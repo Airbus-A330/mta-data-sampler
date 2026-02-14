@@ -173,3 +173,13 @@ function materializeCounts(counts, taxonomy) {
         label: entry?.label ?? id,
         count,
         polarity: entry?.polarity,
+        valence: entry?.valence,
+        arousal: entry?.arousal,
+      };
+    })
+    .sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
+}
+
+/**
+ * Analyzes one short affect response using only local Node.js NLP tooling.
+ *
