@@ -162,3 +162,14 @@ function collectLexiconHits(phrases, filteredTokens, taxonomy, stemLookup) {
  *   valence?: number,
  *   arousal?: number
  * }>}
+ */
+function materializeCounts(counts, taxonomy) {
+  return [...counts.entries()]
+    .map(([id, count]) => {
+      const entry = taxonomy.find((candidate) => candidate.id === id);
+
+      return {
+        id,
+        label: entry?.label ?? id,
+        count,
+        polarity: entry?.polarity,
