@@ -203,3 +203,14 @@ function analyzeAffect(rawText) {
   const tokens = tokenizer.tokenize(normalizedText);
   const filteredTokens = removeStopwords(tokens, natural.stopwords.concat(EXTRA_STOPWORDS))
     .map((token) => token.trim())
+    .filter((token) => token && /[a-z]/.test(token));
+
+  const emotionCounts = collectLexiconHits(phrases, filteredTokens, EMOTION_TAXONOMY, emotionStemLookup);
+  const topicCounts = collectLexiconHits(phrases, filteredTokens, TOPIC_TAXONOMY, topicStemLookup);
+
+  const sentimentComparative = filteredTokens.length > 0
+    ? sentimentAnalyzer.getSentiment(filteredTokens)
+    : 0;
+
+  const emotionLabels = materializeCounts(emotionCounts, EMOTION_TAXONOMY);
+  const topicLabels = materializeCounts(topicCounts, TOPIC_TAXONOMY);
