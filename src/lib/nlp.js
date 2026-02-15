@@ -193,3 +193,13 @@ function materializeCounts(counts, taxonomy) {
  *   topicLabels: Array<{id: string, label: string, count: number}>,
  *   valence: number,
  *   arousal: number,
+ *   affectPolarity: 'positive' | 'negative' | 'neutral',
+ *   uncategorized: boolean
+ * }}
+ */
+function analyzeAffect(rawText) {
+  const normalizedText = cleanText(rawText);
+  const phrases = splitPhrases(normalizedText);
+  const tokens = tokenizer.tokenize(normalizedText);
+  const filteredTokens = removeStopwords(tokens, natural.stopwords.concat(EXTRA_STOPWORDS))
+    .map((token) => token.trim())
