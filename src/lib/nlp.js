@@ -183,3 +183,13 @@ function materializeCounts(counts, taxonomy) {
 /**
  * Analyzes one short affect response using only local Node.js NLP tooling.
  *
+ * @param {string} rawText
+ * @returns {{
+ *   rawText: string,
+ *   normalizedText: string,
+ *   phrases: string[],
+ *   filteredTokens: string[],
+ *   emotionLabels: Array<{id: string, label: string, count: number, polarity?: string, valence?: number, arousal?: number}>,
+ *   topicLabels: Array<{id: string, label: string, count: number}>,
+ *   valence: number,
+ *   arousal: number,
