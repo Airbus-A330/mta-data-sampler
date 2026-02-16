@@ -224,3 +224,12 @@ function analyzeAffect(rawText) {
     arousal = emotionLabels.reduce((sum, item) => sum + (item.arousal ?? 0.5) * item.count, 0) / totalEmotionHits;
   } else if (filteredTokens.length > 0) {
     valence = Math.max(-1, Math.min(1, sentimentComparative / 4));
+    arousal = Math.min(1, Math.abs(valence) * 0.65 + 0.2);
+  }
+
+  let affectPolarity = 'neutral';
+  if (valence > 0.15) {
+    affectPolarity = 'positive';
+  } else if (valence < -0.15) {
+    affectPolarity = 'negative';
+  }
