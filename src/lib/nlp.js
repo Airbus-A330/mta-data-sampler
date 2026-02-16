@@ -244,3 +244,12 @@ function analyzeAffect(rawText) {
     valence,
     arousal,
     affectPolarity,
+    uncategorized: emotionLabels.length === 0 && topicLabels.length === 0,
+  };
+}
+
+module.exports = {
+  analyzeAffect,
+  cleanText,
+  normalizeEncoding,
+};
