@@ -21,3 +21,15 @@
  * }>}
  */
 const EMOTION_TAXONOMY = Object.freeze([
+  {
+    id: 'calm',
+    label: 'Calm',
+    polarity: 'positive',
+    valence: 0.85,
+    arousal: 0.2,
+    keywords: ['calm', 'peaceful', 'relaxed', 'relief', 'relieved', 'comfortable', 'comforted'],
+    phrases: ['at ease', 'feel safe'],
+  },
+  {
+    id: 'joy',
+    label: 'Joy',
