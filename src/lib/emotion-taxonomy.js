@@ -10,3 +10,14 @@
  * Valence is on [-1, 1], where -1 is maximally negative and 1 is maximally
  * positive. Arousal is on [0, 1], where 1 is highly activating.
  *
+ * @type {ReadonlyArray<{
+ *   id: string,
+ *   label: string,
+ *   polarity: 'positive' | 'negative' | 'neutral',
+ *   valence: number,
+ *   arousal: number,
+ *   keywords: string[],
+ *   phrases?: string[]
+ * }>}
+ */
+const EMOTION_TAXONOMY = Object.freeze([
