@@ -33,3 +33,14 @@ const EMOTION_TAXONOMY = Object.freeze([
   {
     id: 'joy',
     label: 'Joy',
+    polarity: 'positive',
+    valence: 0.95,
+    arousal: 0.65,
+    keywords: ['happy', 'excited', 'good', 'great', 'pleasant', 'delighted', 'ready'],
+    phrases: ['feel good'],
+  },
+  {
+    id: 'curiosity',
+    label: 'Curiosity',
+    polarity: 'positive',
+    valence: 0.45,
