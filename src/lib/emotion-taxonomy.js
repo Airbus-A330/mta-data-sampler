@@ -90,3 +90,14 @@ const EMOTION_TAXONOMY = Object.freeze([
     keywords: ['fearful', 'afraid', 'scared', 'scary', 'unsafe', 'dangerous', 'threatened'],
     phrases: ['a bit scary'],
   },
+  {
+    id: 'disgust',
+    label: 'Disgust',
+    polarity: 'negative',
+    valence: -0.9,
+    arousal: 0.8,
+    keywords: ['dirty', 'grimy', 'gross', 'disgust', 'disgusting', 'filthy', 'stinky', 'urine'],
+    phrases: ['bad smell', 'run down', 'rundown'],
+  },
+  {
+    id: 'claustrophobia',
