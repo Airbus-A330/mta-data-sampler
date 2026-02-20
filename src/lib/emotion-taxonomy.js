@@ -113,3 +113,14 @@ const EMOTION_TAXONOMY = Object.freeze([
     polarity: 'negative',
     valence: -0.55,
     arousal: 0.6,
+    keywords: ['eerie', 'uncanny', 'weird', 'strange', 'backrooms', 'liminal'],
+  },
+  {
+    id: 'irritation',
+    label: 'Irritation',
+    polarity: 'negative',
+    valence: -0.65,
+    arousal: 0.7,
+    keywords: ['irritating', 'irritated', 'annoyed', 'annoying', 'loud', 'frustrated', 'rushed'],
+  },
+  {
