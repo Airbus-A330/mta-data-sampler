@@ -181,3 +181,13 @@ const TOPIC_TAXONOMY = Object.freeze([
   },
   {
     id: 'urban_character',
+    label: 'Urban Character',
+    keywords: ['chinatown', 'subway', 'station', 'architecture', 'homeless'],
+    phrases: ['anti homeless architecture', 'normal subway station'],
+  },
+]);
+
+module.exports = {
+  EMOTION_TAXONOMY,
+  TOPIC_TAXONOMY,
+};
