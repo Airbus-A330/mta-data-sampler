@@ -71,3 +71,17 @@ function list(label, items) {
  * Prints a blank line for visual grouping.
  */
 function blank() {
+  console.log('');
+}
+
+/**
+ * Formats a number for human-readable logging.
+ *
+ * @param {number | null | undefined} value
+ * @param {number} [digits=3]
+ * @returns {string}
+ */
+function formatNumber(value, digits = 3) {
+  if (value === null || value === undefined || Number.isNaN(value)) {
+    return 'n/a';
+  }
