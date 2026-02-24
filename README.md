@@ -48,3 +48,28 @@ The most important specification points folded into this code are:
 ### Station Aggregation
 
 From the technical specification, station-level comfort and safety are defined as averages across responses associated with station \(s\):
+
+$$
+\mathrm{Comfort}_s = \frac{1}{n_s}\sum_{i=1}^{n_s} C_i
+$$
+
+$$
+\mathrm{Safety}_s = \frac{1}{n_s}\sum_{i=1}^{n_s} S_i
+$$
+
+where:
+
+- \(n_s\) is the number of responses associated with station \(s\)
+- \(C_i\) is the comfort score for response \(i\)
+- \(S_i\) is the safety score for response \(i\)
+
+### Phase II Physiological Stress Proxy From Spec
+
+The technical specification defines Phase II stress using physiology:
+
+$$
+\Delta \mathrm{HRV}_i = \mathrm{HRV}_{baseline,i} - \mathrm{HRV}_{exposure,i}
+$$
+
+$$
+\Delta \mathrm{BP}_i = \mathrm{BP}_{post,i} - \mathrm{BP}_{pre,i}
