@@ -23,3 +23,28 @@ The project studies how subway environments produce emotional and perceptual res
 - a short affective response in five words or fewer
 - a comfort rating on a 1-7 Likert scale
 - a safety rating on a 1-7 Likert scale
+- optional demographic information collected at the end of the survey
+
+The goal of this pipeline is to convert those responses into structured signals that can support:
+
+- descriptive analysis
+- dashboarding
+- station comparison
+- future predictive modeling
+- later fusion with physiological measures in Phase II
+
+## Source Documents Incorporated
+
+The most important specification points folded into this code are:
+
+- station-level aggregation is required
+- comfort and safety are modeled as 1-7 Likert variables
+- short-text affect should become structured labels
+- demographics should be preserved for future analysis, but used cautiously
+- the station-level scoring target is the **Subliminal Index Score**
+
+## Spec-Derived Equations
+
+### Station Aggregation
+
+From the technical specification, station-level comfort and safety are defined as averages across responses associated with station \(s\):
