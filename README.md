@@ -123,3 +123,27 @@ This yields a bounded stress proxy in \([0,1]\).
 ### Satisfaction Score
 
 The pipeline also computes a separate bounded satisfaction score for each exposure:
+
+$$
+\mathrm{Satisfaction}_e =
+0.4 \cdot \mathrm{ComfortNorm}_e +
+0.4 \cdot \mathrm{SafetyNorm}_e +
+0.2 \cdot \mathrm{ValenceNorm}_e
+$$
+
+where:
+
+$$
+\mathrm{ComfortNorm}_e = \frac{C_e - 1}{6}
+$$
+
+$$
+\mathrm{SafetyNorm}_e = \frac{S_e - 1}{6}
+$$
+
+This score is not the same as SIS:
+
+- `satisfactionScore` is an intuitive bounded "goodness" score for a response or aggregate
+- `subliminalIndexScore` is the spec-aligned stress-oriented index for station comparison
+
+## Why The Implementation Uses Node.js
