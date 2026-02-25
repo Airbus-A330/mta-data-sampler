@@ -98,3 +98,28 @@ where:
 Phase I has no physiological measurements yet, so the code implements a **Phase I stress proxy** derived only from the short-text affect response.
 
 This avoids double-counting comfort and safety before SIS is computed.
+
+### Text-Derived Stress Proxy
+
+The implemented Phase I stress proxy is:
+
+$$
+\mathrm{StressPhaseI}_e = 0.65 \cdot \left(1 - \mathrm{ValenceNorm}_e\right) + 0.35 \cdot \mathrm{Arousal}_e
+$$
+
+with:
+
+$$
+\mathrm{ValenceNorm}_e = \frac{\mathrm{Valence}_e + 1}{2}
+$$
+
+where:
+
+- \(\mathrm{Valence}_e \in [-1, 1]\) comes from the local NLP normalization layer
+- \(\mathrm{Arousal}_e \in [0, 1]\) comes from the canonical emotion taxonomy
+
+This yields a bounded stress proxy in \([0,1]\).
+
+### Satisfaction Score
+
+The pipeline also computes a separate bounded satisfaction score for each exposure:
