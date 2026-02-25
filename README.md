@@ -73,3 +73,28 @@ $$
 
 $$
 \Delta \mathrm{BP}_i = \mathrm{BP}_{post,i} - \mathrm{BP}_{pre,i}
+$$
+
+$$
+\mathrm{Stress}_i = \alpha \cdot \Delta \mathrm{HRV}_i + \beta \cdot \Delta \mathrm{BP}_i
+$$
+
+### Subliminal Index Score From Spec
+
+The station-level scoring equation in the technical specification is:
+
+$$
+\mathrm{SIS}_s = w_1 \cdot Z(\mathrm{Stress}_s) - w_2 \cdot Z(\mathrm{Comfort}_s) - w_3 \cdot Z(\mathrm{Safety}_s)
+$$
+
+where:
+
+- \(Z(\cdot)\) is z-score normalization
+- \(w_1, w_2, w_3\) are calibrated weights
+- higher SIS means greater subliminal stress impact
+
+## Phase I Adaptation Used In This Repository
+
+Phase I has no physiological measurements yet, so the code implements a **Phase I stress proxy** derived only from the short-text affect response.
+
+This avoids double-counting comfort and safety before SIS is computed.
