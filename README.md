@@ -147,3 +147,29 @@ This score is not the same as SIS:
 - `subliminalIndexScore` is the spec-aligned stress-oriented index for station comparison
 
 ## Why The Implementation Uses Node.js
+
+The technical specification suggests Python for future ML work, but this repository intentionally uses **Node.js** per project direction.
+
+That means:
+
+- ingestion is implemented in Node
+- local NLP normalization is implemented in Node
+- the JSON artifact is generated in Node
+
+This still preserves compatibility with later Python-based ML work because the output is plain JSON and easily ingestible by Python, SQL, dashboards, or notebooks.
+
+## Input Files
+
+### `stations.json`
+
+This file is treated as a **stimulus-to-station mapping**, not a full MTA station metadata table.
+
+Each object is expected to look like:
+
+```json
+{ "id": 28, "name": "Canal St — N/Q" }
+```
+
+Interpretation:
+
+- `id` is the stimulus ID
