@@ -198,3 +198,28 @@ The pipeline expects columns equivalent to:
 - `Total #`
 
 ## Local NLP Design
+
+The free-text response field is short, noisy, and highly variable, so the code uses a local lexicon-based normalization pipeline built with:
+
+- [`natural`](https://www.npmjs.com/package/natural)
+- [`stopword`](https://www.npmjs.com/package/stopword)
+
+### NLP Goals
+
+The NLP layer is designed to:
+
+- normalize encoding artifacts
+- remove stopwords and filler language
+- map noisy text into canonical emotions
+- derive topic tags useful for station-level interpretation
+- produce numeric valence and arousal values
+- keep the logic local and auditable
+
+### Why Lexicon-Based Instead Of A Hosted Model
+
+For this stage, a lexicon approach is appropriate because:
+
+- the responses are extremely short
+- the dataset is small
+- the mapping must be transparent for auditability
+- the project benefits from deterministic outputs
