@@ -273,3 +273,28 @@ These are not used directly in scoring yet, but they are valuable for:
 - later feature engineering
 
 ## Data Flow
+
+The pipeline proceeds in the following order:
+
+1. Read stimulus-to-station mapping.
+2. Read the Qualtrics CSV export.
+3. Normalize each short-text affect response.
+4. Compute exposure-level valence, arousal, emotion labels, and topic labels.
+5. Compute exposure-level stress proxy and satisfaction score.
+6. Aggregate exposures by stimulus.
+7. Aggregate exposures by station.
+8. Compute descriptive statistics and confidence intervals.
+9. Compute stimulus-level and station-level SIS values.
+10. Write a research-ready JSON artifact.
+
+## Output Artifact
+
+The output file is written to:
+
+- `output/station-analysis.json`
+
+### Top-Level Shape
+
+```json
+{
+  "metadata": {},
