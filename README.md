@@ -223,3 +223,27 @@ For this stage, a lexicon approach is appropriate because:
 - the dataset is small
 - the mapping must be transparent for auditability
 - the project benefits from deterministic outputs
+- the labels should remain interpretable to researchers
+
+This is a strong baseline that can later be replaced or augmented by transformer-based classifiers if the dataset grows.
+
+### Canonical Emotions
+
+The current taxonomy includes:
+
+- Calm
+- Joy
+- Curiosity
+- Nostalgia
+- Neutral
+- Vigilance
+- Anxiety
+- Fear
+- Disgust
+- Claustrophobia
+- Eeriness
+- Irritation
+- Boredom
+- Confusion
+
+Each canonical emotion has:
