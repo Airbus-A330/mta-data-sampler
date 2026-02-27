@@ -298,3 +298,28 @@ The output file is written to:
 ```json
 {
   "metadata": {},
+  "globalSummary": {},
+  "stations": []
+}
+```
+
+## Output Schema
+
+Below is a practical schema sketch of the generated JSON.
+
+### `metadata`
+
+Contains:
+
+- generation timestamp
+- runtime information
+- input file references
+- record counts
+- scoring equations
+- scoring weights
+- notes about Phase I assumptions
+- legacy comparison values
+
+Example shape:
+
+```json
