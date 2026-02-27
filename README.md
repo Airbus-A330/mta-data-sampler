@@ -247,3 +247,29 @@ The current taxonomy includes:
 - Confusion
 
 Each canonical emotion has:
+
+- a stable ID
+- a display label
+- a polarity
+- a valence score
+- an arousal score
+- keyword and phrase hooks
+
+### Canonical Topics
+
+The topic layer currently includes:
+
+- Cleanliness / Decay
+- Noise / Sound
+- Crowding / Space
+- Safety / Security
+- Wayfinding / Ambiguity
+- Urban Character
+
+These are not used directly in scoring yet, but they are valuable for:
+
+- interpreting high-SIS stations
+- building dashboards
+- later feature engineering
+
+## Data Flow
