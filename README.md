@@ -323,3 +323,28 @@ Contains:
 Example shape:
 
 ```json
+{
+  "generatedAt": "2026-04-13T18:38:47.153Z",
+  "project": "Subliminal Spaces",
+  "phase": "Phase I",
+  "runtime": "Node v22.14.0",
+  "sourceFiles": {
+    "stationsPath": "...",
+    "csvPath": "...",
+    "legacyResultsPath": "...",
+    "outputPath": "..."
+  },
+  "recordCounts": {
+    "csvRows": 58,
+    "validExposures": 58,
+    "uniqueParticipants": 9,
+    "uniqueStimuli": 29,
+    "uniqueStations": 6
+  },
+  "scoring": {
+    "sisEquation": "...",
+    "sisWeights": {},
+    "phase1StressProxyEquation": "...",
+    "satisfactionEquation": "...",
+    "notes": []
+  }
