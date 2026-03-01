@@ -398,3 +398,28 @@ Each station object contains:
     "lineGroup": "B/Q/R",
     "stimulusIds": ["1", "2", "3", "4", "5", "32", "33"],
     "stimulusTypes": ["audio", "image"]
+  },
+  "responseCount": 10,
+  "participantCount": 5,
+  "aggregateMetrics": {
+    "comfort": {},
+    "safety": {},
+    "affectValence": {},
+    "affectArousal": {},
+    "phase1Stress": {},
+    "satisfactionScore": {},
+    "subliminalIndexScore": {
+      "value": -1.56,
+      "zComponents": {
+        "stress": 0.12,
+        "comfort": 0.91,
+        "safety": 0.77
+      }
+    }
+  },
+  "topEmotions": [],
+  "topTopics": [],
+  "mostPositiveEmotion": {},
+  "mostNegativeEmotion": {},
+  "participantProfile": {},
+  "dataQuality": {},
