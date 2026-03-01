@@ -448,3 +448,28 @@ Example shape:
   "stationKey": "atlantic-av-barclays-ctr-d-n-r",
   "stationName": "Atlantic Av-Barclays Ctr — D/N/R",
   "stimulusTypes": ["audio"],
+  "responseCount": 3,
+  "participantCount": 3,
+  "aggregateMetrics": {
+    "comfort": {},
+    "safety": {},
+    "affectValence": {},
+    "affectArousal": {},
+    "phase1Stress": {},
+    "satisfactionScore": {},
+    "subliminalIndexScore": {}
+  },
+  "topEmotions": [],
+  "topTopics": [],
+  "exposures": []
+}
+```
+
+### Exposure Object Schema
+
+Each nested exposure preserves the row-level signal needed for future modeling:
+
+```json
+{
+  "responseId": "R_123:30:1",
+  "participantId": "R_123",
