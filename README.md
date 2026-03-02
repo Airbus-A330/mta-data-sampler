@@ -548,3 +548,27 @@ The output includes simple diagnostics such as:
 - average token count per affect response
 
 These are useful for:
+
+- spotting weak prompts
+- finding problematic survey sessions
+- deciding when the lexicon should be expanded
+
+## Running The Pipeline
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Build The Analysis JSON
+
+```bash
+npm run build:analysis
+```
+
+### Build The Standalone Dashboard
+
+```bash
+npm run build:dashboard
+```
