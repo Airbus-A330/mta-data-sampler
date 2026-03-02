@@ -473,3 +473,28 @@ Each nested exposure preserves the row-level signal needed for future modeling:
 {
   "responseId": "R_123:30:1",
   "participantId": "R_123",
+  "stimulusId": "30",
+  "stimulusType": "audio",
+  "comfort": 4,
+  "safety": 2,
+  "satisfactionScore": 0.31,
+  "phase1StressProxy": 0.77,
+  "feelings": {
+    "rawText": "Dirty, loud, unsafe",
+    "normalizedText": "dirty, loud, unsafe",
+    "emotionLabels": [],
+    "topicLabels": [],
+    "valence": -0.84,
+    "arousal": 0.82,
+    "polarity": "negative"
+  },
+  "participant": {
+    "participantId": "R_123",
+    "ageGroup": "18-24",
+    "gender": "Male",
+    "ethnicity": "Asian, White",
+    "frequency": "Every day",
+    "borough": "Brooklyn"
+  },
+  "timings": {
+    "startDate": "2026-03-19T16:06:20.000Z",
