@@ -572,3 +572,29 @@ npm run build:analysis
 ```bash
 npm run build:dashboard
 ```
+
+### Build Both Artifacts
+
+```bash
+npm run build:all
+```
+
+### Run Syntax Checks
+
+```bash
+npm test
+```
+
+## Environment Variable Overrides
+
+You can override any default input/output path:
+
+```bash
+STATIONS_JSON_PATH="C:/path/to/stations.json"
+QUALTRICS_CSV_PATH="C:/path/to/export.csv"
+LEGACY_RESULTS_JSON_PATH="C:/path/to/results.json"
+ANALYSIS_OUTPUT_PATH="C:/path/to/output.json"
+npm run build:analysis
+```
+
+## File Guide
