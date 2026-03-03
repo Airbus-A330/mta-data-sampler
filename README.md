@@ -623,3 +623,27 @@ Standalone dashboard generator. Responsibilities:
 ### `src/lib/nlp.js`
 
 Local NLP utility layer. Responsibilities:
+
+- encoding cleanup
+- tokenization
+- stopword removal
+- lexicon matching
+- valence and arousal scoring
+- topic extraction
+
+### `src/lib/emotion-taxonomy.js`
+
+Central taxonomy definition for:
+
+- canonical emotions
+- topic tags
+- polarity
+- valence
+- arousal
+- lexical triggers
+
+## Design Decisions
+
+### 1. Stimulus-Level And Station-Level Both Matter
+
+The project needs station-level conclusions, but the raw unit of collection is the exposure to a specific stimulus.
