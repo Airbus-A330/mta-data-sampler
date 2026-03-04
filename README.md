@@ -697,3 +697,29 @@ Once Phase II data exists, the intended direction is:
 - compare station-level outputs against researcher intuition
 
 ### Medium Term
+
+- add a proper `Stimuli` metadata source with capture date, URI, and research tags
+- add true MTA station metadata if you want richer station-side information
+- store this output in a relational database aligned to the technical spec
+- add dashboard visualizations
+
+### Phase II
+
+- ingest HRV, blood pressure, and motion quality flags
+- replace the text-only stress proxy with the physiology-derived stress target
+- calibrate SIS weights empirically
+- train interpretable regression baselines
+
+## Important Limitations
+
+- `stations.json` currently maps stimulus IDs to station names, but does not provide full MTA metadata.
+- The current NLP layer is deterministic and auditable, but not yet a learned classifier.
+- SIS weights are placeholders until calibration data exists.
+- The current output only includes stimuli observed in the provided CSV export.
+- Confidence intervals are bootstrap estimates over small samples and should be interpreted carefully.
+
+## Current Output Summary
+
+At the time of the latest run, the generated artifact captured:
+
+- 58 valid exposures
