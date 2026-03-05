@@ -11,3 +11,16 @@ const logger = require('./lib/logger');
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const INPUT_JSON_PATH = process.env.ANALYSIS_OUTPUT_PATH ?? path.join(ROOT_DIR, 'output', 'station-analysis.json');
+const OUTPUT_HTML_PATH = process.env.DASHBOARD_OUTPUT_PATH ?? path.join(ROOT_DIR, 'output', 'dashboard.html');
+
+/**
+ * Reads and parses UTF-8 JSON from disk.
+ *
+ * @param {string} filePath
+ * @returns {any}
+ */
+function readJson(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+/**
