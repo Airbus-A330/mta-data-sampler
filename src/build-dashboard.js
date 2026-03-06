@@ -50,3 +50,16 @@ function serializeForHtml(value) {
  */
 function buildHtml(analysis) {
   const embeddedData = serializeForHtml(analysis);
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subliminal Spaces Dashboard</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --bg-accent: radial-gradient(circle at top left, rgba(183, 214, 194, 0.35), transparent 35%), radial-gradient(circle at top right, rgba(236, 211, 186, 0.45), transparent 28%), linear-gradient(180deg, #f7f3ec 0%, #f0ebe4 100%);
+      --panel: rgba(255, 252, 247, 0.84);
+      --panel-strong: rgba(255, 252, 247, 0.94);
