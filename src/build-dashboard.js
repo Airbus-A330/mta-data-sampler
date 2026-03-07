@@ -115,3 +115,16 @@ function buildHtml(analysis) {
     .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 18px; }
     .stat-card { padding: 18px; }
     .stat-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 10px; }
+    .stat-value { font-size: clamp(1.3rem, 2vw, 2.1rem); font-weight: 700; letter-spacing: -0.04em; }
+    .icon-wrap { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 12px; background: var(--accent-soft); color: var(--accent-strong); flex: 0 0 auto; }
+    .icon-wrap svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-inline { display: inline-flex; align-items: center; gap: 10px; }
+    .layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 18px; }
+    .sidebar { padding: 18px; position: sticky; top: 20px; height: calc(100vh - 40px); overflow: hidden; display: flex; flex-direction: column; }
+    .sidebar h2, .content h2 { margin: 0 0 14px; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .search { width: 100%; border: 1px solid var(--border); background: var(--input); color: var(--text); padding: 12px 14px; border-radius: 14px; font: inherit; outline: none; margin-bottom: 14px; }
+    .control-grid { display: grid; gap: 10px; margin-bottom: 14px; }
+    .control-select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--input);
