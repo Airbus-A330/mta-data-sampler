@@ -128,3 +128,16 @@ function buildHtml(analysis) {
       width: 100%;
       border: 1px solid var(--border);
       background: var(--input);
+      color: var(--text);
+      padding: 11px 12px;
+      border-radius: 14px;
+      font: inherit;
+      outline: none;
+    }
+    .station-list { overflow: auto; display: grid; gap: 10px; padding-right: 2px; }
+    .station-button { width: 100%; text-align: left; border: 1px solid var(--border); background: transparent; color: var(--text); padding: 14px; border-radius: 16px; cursor: pointer; transition: background 160ms ease, border-color 160ms ease, transform 160ms ease; }
+    .station-button:hover { transform: translateY(-1px); }
+    .station-button.active { background: var(--accent-soft); border-color: rgba(30, 107, 92, 0.35); }
+    .station-button strong { display: block; margin-bottom: 6px; font-size: 0.98rem; }
+    .station-button small { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); }
+    .content { display: grid; gap: 18px; }
