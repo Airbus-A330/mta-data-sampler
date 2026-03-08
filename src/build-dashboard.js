@@ -180,3 +180,16 @@ function buildHtml(analysis) {
     .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: var(--chip); font-size: 12px; }
     .positive { color: var(--positive); }
     .negative { color: var(--negative); }
+    .warning { color: var(--warning); }
+    .stimuli-grid { display: grid; gap: 14px; }
+    .stimulus-card { border: 1px solid var(--border); border-radius: 18px; padding: 18px; background: var(--chip); }
+    .stimulus-header { display: flex; justify-content: space-between; gap: 14px; align-items: start; margin-bottom: 12px; }
+    .stimulus-header h4 { margin: 0; font-size: 1rem; }
+    .mini-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 12px 0; }
+    .mini { padding: 12px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,0.04); }
+    .mini .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+    .mini .v { font-size: 1.08rem; font-weight: 700; }
+    .footer-note { margin-top: 18px; color: var(--muted); font-size: 0.92rem; }
+    .command-box {
+      width: 100%;
+      border: 1px solid var(--border);
