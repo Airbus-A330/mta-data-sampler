@@ -141,3 +141,16 @@ function buildHtml(analysis) {
     .station-button strong { display: block; margin-bottom: 6px; font-size: 0.98rem; }
     .station-button small { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); }
     .content { display: grid; gap: 18px; }
+    .section-card { padding: 22px; }
+    .section-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; margin-bottom: 18px; }
+    .section-head h3 { margin: 0; font-size: clamp(1.2rem, 1.8vw, 1.8rem); letter-spacing: -0.03em; }
+    .muted { color: var(--muted); }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip { padding: 7px 10px; border-radius: 999px; background: var(--chip); color: var(--text); font-size: 12px; }
+    .controls-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .controls-row.dev {
