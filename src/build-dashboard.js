@@ -154,3 +154,16 @@ function buildHtml(analysis) {
       margin-bottom: 18px;
     }
     .controls-row.dev {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .tab-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tab-button { appearance: none; border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 999px; padding: 10px 14px; cursor: pointer; font: inherit; display: inline-flex; align-items: center; gap: 10px; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
+    .tab-button:hover { transform: translateY(-1px); color: var(--text); }
+    .tab-button.active { background: var(--accent-soft); color: var(--accent-strong); border-color: rgba(30, 107, 92, 0.28); }
+    .tab-panel { display: none; gap: 18px; }
+    .tab-panel.active { display: grid; }
+    .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric-tile { padding: 16px; border-radius: 18px; background: var(--chip); border: 1px solid var(--border); }
+    .metric-tile .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; }
+    .metric-tile .value { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.04em; }
+    .dual-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
