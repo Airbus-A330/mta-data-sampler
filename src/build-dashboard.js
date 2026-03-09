@@ -193,3 +193,15 @@ function buildHtml(analysis) {
     .command-box {
       width: 100%;
       border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 16px;
+      font: inherit;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    .helper-text {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
