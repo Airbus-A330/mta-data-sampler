@@ -243,3 +243,17 @@ function buildHtml(analysis) {
         <div><div class="stat-label">Display Mode</div><div class="muted">Standalone HTML with embedded analysis data</div></div>
       </div>
     </section>
+
+    <section id="summary-cards" class="stat-grid"></section>
+
+    <main class="layout" id="stations-anchor">
+      <aside class="panel sidebar">
+        <h2>Stations</h2>
+        <input id="station-search" class="search" type="search" placeholder="Search station or line group" />
+        <div class="control-grid">
+          <select id="station-sort" class="control-select">
+            <option value="name_asc">Sort stations: Name A-Z</option>
+            <option value="name_desc">Sort stations: Name Z-A</option>
+            <option value="sis_desc">Sort stations: Highest SIS</option>
+            <option value="sis_asc">Sort stations: Lowest SIS</option>
+            <option value="satisfaction_desc">Sort stations: Highest satisfaction</option>
