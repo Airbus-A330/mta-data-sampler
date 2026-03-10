@@ -270,3 +270,16 @@ function buildHtml(analysis) {
       </aside>
 
       <section class="content">
+        <div class="panel section-card">
+          <div class="section-head">
+            <div>
+              <h3 id="station-title"></h3>
+              <p id="station-subtitle" class="muted"></p>
+              <div id="station-chips" class="chips"></div>
+            </div>
+            <div id="station-health"></div>
+          </div>
+          <div id="station-metrics" class="metric-grid"></div>
+        </div>
+
+        <div class="panel section-card">
