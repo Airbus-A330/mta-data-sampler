@@ -296,3 +296,16 @@ function buildHtml(analysis) {
               <span class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 18v3"/></svg></span>
               <span>Stimuli</span>
             </button>
+            <button class="tab-button" data-tab="stations-table">
+              <span class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M9 21V9"/></svg></span>
+              <span>Comparison</span>
+            </button>
+            <button class="tab-button" data-tab="dev-mode">
+              <span class="icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-5 3 5 3"/><path d="M16 9l5 3-5 3"/><path d="M14 4l-4 16"/></svg></span>
+              <span>Dev Mode</span>
+            </button>
+          </div>
+
+          <div id="tab-overview" class="tab-panel active">
+            <div class="dual-grid">
+              <div class="panel section-card">
