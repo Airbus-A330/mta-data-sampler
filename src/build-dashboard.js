@@ -335,3 +335,16 @@ function buildHtml(analysis) {
                 <div id="demographics-left" class="stack"></div>
                 <div id="demographics-right" class="stack"></div>
               </div>
+            </div>
+          </div>
+
+          <div id="tab-stimuli" class="tab-panel">
+            <div class="panel section-card">
+              <div class="section-head"><div><h3>Stimulus Explorer</h3><p class="muted">Every observed stimulus under the selected station, with aggregate metrics and top signals.</p></div></div>
+              <div class="controls-row">
+                <select id="stimulus-type-filter" class="control-select">
+                  <option value="all">Stimuli: All types</option>
+                  <option value="image">Stimuli: Images only</option>
+                  <option value="audio">Stimuli: Audio only</option>
+                </select>
+                <select id="stimulus-sort" class="control-select">
