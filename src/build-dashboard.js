@@ -374,3 +374,16 @@ function buildHtml(analysis) {
                   <option value="sis_asc">Table sort: Lowest SIS</option>
                   <option value="name_asc">Table sort: Name A-Z</option>
                   <option value="responses_desc">Table sort: Most responses</option>
+                  <option value="satisfaction_desc">Table sort: Highest satisfaction</option>
+                </select>
+                <select id="table-modality-filter" class="control-select">
+                  <option value="all">Table filter: All modalities</option>
+                  <option value="image">Table filter: Image stations only</option>
+                  <option value="audio">Table filter: Audio stations only</option>
+                  <option value="mixed">Table filter: Mixed modality stations</option>
+                </select>
+                <select id="table-emotion-filter" class="control-select">
+                  <option value="all">Table emotion: All</option>
+                </select>
+                <select id="table-topic-filter" class="control-select">
+                  <option value="all">Table topic: All</option>
