@@ -361,3 +361,16 @@ function buildHtml(analysis) {
                   <option value="all">Topic filter: All</option>
                 </select>
               </div>
+              <div id="stimuli-grid" class="stimuli-grid"></div>
+            </div>
+          </div>
+
+          <div id="tab-stations-table" class="tab-panel">
+            <div class="panel section-card">
+              <div class="section-head"><div><h3>All Stations Table</h3><p class="muted">Compact comparison across station groups in the current export.</p></div></div>
+              <div class="controls-row">
+                <select id="table-sort" class="control-select">
+                  <option value="sis_desc">Table sort: Highest SIS</option>
+                  <option value="sis_asc">Table sort: Lowest SIS</option>
+                  <option value="name_asc">Table sort: Name A-Z</option>
+                  <option value="responses_desc">Table sort: Most responses</option>
