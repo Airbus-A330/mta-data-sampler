@@ -400,3 +400,15 @@ function buildHtml(analysis) {
                 </table>
               </div>
               <div class="footer-note">
+                Light/dark preference is stored locally in your browser. The dashboard is fully standalone and can be opened directly after generation.
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-dev-mode" class="tab-panel">
+            <div class="panel section-card">
+              <div class="section-head">
+                <div>
+                  <h3>Raw Exposure Explorer</h3>
+                  <p class="muted">Exposure-level records with field filters and a lightweight command syntax for ad hoc analysis.</p>
+                </div>
