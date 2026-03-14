@@ -425,3 +425,16 @@ function buildHtml(analysis) {
                 <span class="mono">mincomfort:</span>,
                 <span class="mono">minsafety:</span>,
                 <span class="mono">sort:</span>,
+                <span class="mono">limit:</span>.
+              </div>
+              <div class="controls-row dev">
+                <select id="dev-sort" class="control-select">
+                  <option value="time_desc">Dev sort: Newest first</option>
+                  <option value="time_asc">Dev sort: Oldest first</option>
+                  <option value="satisfaction_desc">Dev sort: Highest satisfaction</option>
+                  <option value="stress_desc">Dev sort: Highest stress</option>
+                  <option value="comfort_desc">Dev sort: Highest comfort</option>
+                  <option value="safety_desc">Dev sort: Highest safety</option>
+                </select>
+                <select id="dev-limit" class="control-select">
+                  <option value="25">Show 25 rows</option>
