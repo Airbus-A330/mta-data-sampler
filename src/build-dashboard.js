@@ -477,3 +477,16 @@ function buildHtml(analysis) {
   </div>
 
   <script>
+    window.__ANALYSIS__ = ${embeddedData};
+  </script>
+  <script>
+    const analysis = window.__ANALYSIS__;
+    const stations = analysis.stations || [];
+    const allExposures = stations.flatMap((station) =>
+      (station.stimuli || []).flatMap((stimulus) =>
+        (stimulus.exposures || []).map((exposure) => ({
+          ...exposure,
+          stationKey: station.stationKey,
+          stationName: station.stationName,
+          stationLineGroup: station.stationMetadata?.lineGroup || '',
+          stimulusAggregateSIS: stimulus.aggregateMetrics?.subliminalIndexScore?.value ?? null,
