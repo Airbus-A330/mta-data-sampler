@@ -464,3 +464,16 @@ function buildHtml(analysis) {
                       <th>Topics</th>
                       <th>Feeling</th>
                       <th>Start</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dev-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
