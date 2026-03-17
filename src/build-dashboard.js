@@ -568,3 +568,16 @@ function buildHtml(analysis) {
     function formatNumber(value, digits = 3) {
       if (value === null || value === undefined || Number.isNaN(Number(value))) return 'n/a';
       return Number(value).toFixed(digits);
+    }
+
+    function formatDate(value) {
+      if (!value) return 'n/a';
+      const parsed = new Date(value);
+      return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleString();
+    }
+
+    function normalizeText(value) {
+      return String(value || '').trim().toLowerCase();
+    }
+
+    function getStationModalities(station) {
