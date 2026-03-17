@@ -555,3 +555,16 @@ function buildHtml(analysis) {
       devTableBody: document.getElementById('dev-table-body'),
       themeToggle: document.getElementById('theme-toggle'),
       jumpToStations: document.getElementById('jump-to-stations'),
+      tabButtons: Array.from(document.querySelectorAll('[data-tab]')),
+      tabPanels: Array.from(document.querySelectorAll('.tab-panel')),
+    };
+
+    function applyTheme(theme) {
+      document.body.classList.toggle('dark', theme === 'dark');
+      state.theme = theme;
+      localStorage.setItem('subliminal-spaces-theme', theme);
+    }
+
+    function formatNumber(value, digits = 3) {
+      if (value === null || value === undefined || Number.isNaN(Number(value))) return 'n/a';
+      return Number(value).toFixed(digits);
