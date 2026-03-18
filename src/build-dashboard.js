@@ -619,3 +619,16 @@ function buildHtml(analysis) {
     function parseDevCommand(command) {
       const filters = {};
       const raw = String(command || '').trim();
+      const tokens = raw.match(/(?:[^\s"]+:"[^"]*")|(?:[^\s"]+:'[^']*')|(?:[^\s"]+)/g) || [];
+      const freeText = [];
+
+      tokens.forEach((token) => {
+        const divider = token.indexOf(':');
+        if (divider === -1) {
+          freeText.push(token);
+          return;
+        }
+        const key = token.slice(0, divider).toLowerCase();
+        const value = token.slice(divider + 1).replace(/^["']|["']$/g, '');
+        if (!value) return;
+        filters[key] = value;
