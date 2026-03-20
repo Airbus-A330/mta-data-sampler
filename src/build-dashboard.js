@@ -671,3 +671,16 @@ function buildHtml(analysis) {
         ...stationsList.map((name) => 'station:"' + name + '"'),
         ...emotionList.map((label) => 'emotion:"' + label + '"'),
         ...topicList.map((label) => 'topic:"' + label + '"'),
+      ];
+
+      elements.devCommandSuggestions.innerHTML = suggestions
+        .map((value) => '<option value="' + value.replace(/"/g, '&quot;') + '"></option>')
+        .join('');
+    }
+
+    function sortExposures(items, sortKey) {
+      const sorted = [...items];
+      const sorters = {
+        time_desc: (a, b) => new Date(b.timings?.startDate || 0) - new Date(a.timings?.startDate || 0),
+        time_asc: (a, b) => new Date(a.timings?.startDate || 0) - new Date(b.timings?.startDate || 0),
+        satisfaction_desc: (a, b) => b.satisfactionScore - a.satisfactionScore,
