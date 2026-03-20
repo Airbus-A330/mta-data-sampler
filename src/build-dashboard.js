@@ -697,3 +697,16 @@ function buildHtml(analysis) {
         const haystack = [
           station.stationName,
           station.stationMetadata.complexName,
+          station.stationMetadata.lineGroup,
+        ].join(' ').toLowerCase();
+        const matchesQuery = haystack.includes(query);
+        const modality = getStationModalities(station);
+        const matchesModality = state.stationTypeFilter === 'all' || modality === state.stationTypeFilter;
+        return matchesQuery && matchesModality;
+      });
+
+      state.filteredStations = sortStations(filtered, state.stationSort);
+
+      if (!state.filteredStations.some((station) => station.stationKey === state.selectedStationKey)) {
+        state.selectedStationKey = state.filteredStations[0]?.stationKey ?? stations[0]?.stationKey ?? null;
+      }
