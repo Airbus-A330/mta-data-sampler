@@ -684,3 +684,16 @@ function buildHtml(analysis) {
         time_desc: (a, b) => new Date(b.timings?.startDate || 0) - new Date(a.timings?.startDate || 0),
         time_asc: (a, b) => new Date(a.timings?.startDate || 0) - new Date(b.timings?.startDate || 0),
         satisfaction_desc: (a, b) => b.satisfactionScore - a.satisfactionScore,
+        stress_desc: (a, b) => b.phase1StressProxy - a.phase1StressProxy,
+        comfort_desc: (a, b) => b.comfort - a.comfort,
+        safety_desc: (a, b) => b.safety - a.safety,
+      };
+      return sorted.sort(sorters[sortKey] || sorters.time_desc);
+    }
+
+    function refreshStationFilters() {
+      const query = elements.stationSearch.value.trim().toLowerCase();
+      const filtered = stations.filter((station) => {
+        const haystack = [
+          station.stationName,
+          station.stationMetadata.complexName,
