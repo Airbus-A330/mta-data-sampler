@@ -775,3 +775,16 @@ function buildHtml(analysis) {
         <div class="panel stat-card">
           <div class="stat-label">\${label}</div>
           <div class="stat-value">\${value}</div>
+        </div>
+      \`).join('');
+    }
+
+    function renderStationList() {
+      elements.stationList.innerHTML = state.filteredStations.map((station) => \`
+        <button class="station-button \${station.stationKey === state.selectedStationKey ? 'active' : ''}" data-station-key="\${station.stationKey}">
+          <strong>\${station.stationName}</strong>
+          <small>
+            <span>\${station.responseCount} responses</span>
+            <span>SIS \${formatNumber(station.aggregateMetrics.subliminalIndexScore.value)}</span>
+          </small>
+        </button>
