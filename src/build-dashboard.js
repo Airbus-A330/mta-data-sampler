@@ -762,3 +762,16 @@ function buildHtml(analysis) {
 
       const cards = [
         ['CSV Rows', counts.csvRows],
+        ['Valid Exposures', counts.validExposures],
+        ['Unique Participants', counts.uniqueParticipants],
+        ['Observed Stations', counts.uniqueStations],
+        ['Observed Stimuli', counts.uniqueStimuli],
+        ['Avg Satisfaction', formatNumber(global.satisfactionScore.average)],
+        ['Avg Phase I Stress', formatNumber(global.phase1Stress.average)],
+        ['Uncategorized Affect', global.uncategorizedAffectResponses],
+      ];
+
+      elements.summaryCards.innerHTML = cards.map(([label, value]) => \`
+        <div class="panel stat-card">
+          <div class="stat-label">\${label}</div>
+          <div class="stat-value">\${value}</div>
