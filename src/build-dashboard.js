@@ -801,3 +801,16 @@ function buildHtml(analysis) {
     }
 
     function renderStationTable() {
+      const filteredStations = sortStations(
+        stations.filter((station) => {
+          const modality = getStationModalities(station);
+          const matchesModality = state.tableModalityFilter === 'all' || modality === state.tableModalityFilter;
+          const matchesEmotion = includesTopLabel(station.topEmotions, state.tableEmotionFilter);
+          const matchesTopic = includesTopLabel(station.topTopics, state.tableTopicFilter);
+          return matchesModality && matchesEmotion && matchesTopic;
+        }),
+        state.tableSort,
+      );
+
+      elements.stationsTableBody.innerHTML = filteredStations
+        .map((station) => \`
