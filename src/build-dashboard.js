@@ -838,3 +838,17 @@ function buildHtml(analysis) {
     function chip(text, className = '') {
       return \`<span class="chip \${className}">\${text}</span>\`;
     }
+
+    function renderDemographicStack(target, title, rows) {
+      target.innerHTML += \`
+        <div>
+          <h2>\${title}</h2>
+          <div class="bar-list">
+            \${rows.length
+              ? rows.map((row) => \`
+                  <div class="bar-row">
+                    <div class="bar-meta">
+                      <span>\${row.label}</span>
+                      <span class="muted">\${row.count}</span>
+                    </div>
+                    <div class="bar-track">
