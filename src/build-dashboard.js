@@ -864,3 +864,17 @@ function buildHtml(analysis) {
     function renderSelectedStation() {
       const station = stations.find((item) => item.stationKey === state.selectedStationKey) || stations[0];
       if (!station) return;
+
+      elements.stationTitle.textContent = station.stationName;
+      elements.stationSubtitle.textContent = \`\${station.stationMetadata.complexName} · \${station.stationMetadata.lineGroup || 'Unknown line group'}\`;
+      elements.stationChips.innerHTML = [
+        chip(\`\${station.responseCount} responses\`),
+        chip(\`\${station.participantCount} participants\`),
+        chip(\`\${station.stationMetadata.stimulusIds.length} stimuli\`),
+        chip(station.mostPositiveEmotion ? \`Most positive: \${station.mostPositiveEmotion.label}\` : 'Most positive: n/a', 'positive'),
+        chip(station.mostNegativeEmotion ? \`Most negative: \${station.mostNegativeEmotion.label}\` : 'Most negative: n/a', 'negative'),
+      ].join('');
+
+      const sis = station.aggregateMetrics.subliminalIndexScore.value;
+      const tone = sis > 0.75 ? 'negative' : sis < -0.75 ? 'positive' : 'warning';
+      elements.stationHealth.innerHTML = chip(\`SIS \${formatNumber(sis)}\`, tone);
