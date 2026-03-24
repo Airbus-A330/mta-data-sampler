@@ -878,3 +878,16 @@ function buildHtml(analysis) {
       const sis = station.aggregateMetrics.subliminalIndexScore.value;
       const tone = sis > 0.75 ? 'negative' : sis < -0.75 ? 'positive' : 'warning';
       elements.stationHealth.innerHTML = chip(\`SIS \${formatNumber(sis)}\`, tone);
+
+      elements.stationMetrics.innerHTML = [
+        metricTile('Avg Comfort', formatNumber(station.aggregateMetrics.comfort.average)),
+        metricTile('Avg Safety', formatNumber(station.aggregateMetrics.safety.average)),
+        metricTile('Avg Satisfaction', formatNumber(station.aggregateMetrics.satisfactionScore.average)),
+        metricTile('Phase I Stress', formatNumber(station.aggregateMetrics.phase1Stress.average)),
+        metricTile('Affect Valence', formatNumber(station.aggregateMetrics.affectValence.average)),
+        metricTile('Affect Arousal', formatNumber(station.aggregateMetrics.affectArousal.average)),
+        metricTile('SIS', formatNumber(sis), tone),
+        metricTile('Uncategorized Affect', String(station.dataQuality.uncategorizedAffectResponses)),
+      ].join('');
+
+      topBarList(elements.stationEmotions, station.topEmotions.slice(0, 5));
