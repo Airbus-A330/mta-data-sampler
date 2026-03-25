@@ -891,3 +891,16 @@ function buildHtml(analysis) {
       ].join('');
 
       topBarList(elements.stationEmotions, station.topEmotions.slice(0, 5));
+      topBarList(elements.stationTopics, station.topTopics.slice(0, 5));
+
+      elements.stationQuality.innerHTML = [
+        chip(\`Uncategorized: \${station.dataQuality.uncategorizedAffectResponses}\`),
+        chip(\`Empty affect: \${station.dataQuality.emptyAffectResponses}\`),
+        chip(\`Avg token count: \${formatNumber(station.dataQuality.averageAffectTokenCount, 2)}\`),
+      ].join('');
+
+      elements.demographicsLeft.innerHTML = '';
+      elements.demographicsRight.innerHTML = '';
+      renderDemographicStack(elements.demographicsLeft, 'Age Groups', station.participantProfile.ageGroups || []);
+      renderDemographicStack(elements.demographicsLeft, 'Gender', station.participantProfile.genders || []);
+      renderDemographicStack(elements.demographicsRight, 'Ethnicity', station.participantProfile.ethnicities || []);
