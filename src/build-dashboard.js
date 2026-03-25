@@ -930,3 +930,16 @@ function buildHtml(analysis) {
                 \${chip(\`\${stimulus.responseCount} responses\`)}
                 \${chip(\`\${stimulus.participantCount} participants\`)}
               </div>
+            </div>
+            <div class="pill">SIS \${formatNumber(stimulus.aggregateMetrics.subliminalIndexScore.value)}</div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini"><div class="k">Comfort</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.comfort.average)}</div></div>
+            <div class="mini"><div class="k">Safety</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.safety.average)}</div></div>
+            <div class="mini"><div class="k">Satisfaction</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.satisfactionScore.average)}</div></div>
+            <div class="mini"><div class="k">Stress</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.phase1Stress.average)}</div></div>
+          </div>
+          <div class="dual-grid">
+            <div>
+              <h2>Top Emotions</h2>
+              <div class="chips">
