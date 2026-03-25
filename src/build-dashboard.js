@@ -917,3 +917,16 @@ function buildHtml(analysis) {
           const matchesTopic = includesTopLabel(stimulus.topTopics, state.topicFilter);
           return matchesType && matchesEmotion && matchesTopic;
         }),
+        state.stimulusSort,
+      );
+
+      elements.stimuliGrid.innerHTML = visibleStimuli.length ? visibleStimuli.map((stimulus) => \`
+        <article class="stimulus-card">
+          <div class="stimulus-header">
+            <div>
+              <h4>Stimulus \${stimulus.stimulusId}</h4>
+              <div class="chips">
+                \${(stimulus.stimulusTypes || []).map((type) => chip(type)).join('')}
+                \${chip(\`\${stimulus.responseCount} responses\`)}
+                \${chip(\`\${stimulus.participantCount} participants\`)}
+              </div>
