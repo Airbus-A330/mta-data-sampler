@@ -943,3 +943,16 @@ function buildHtml(analysis) {
             <div>
               <h2>Top Emotions</h2>
               <div class="chips">
+                \${(stimulus.topEmotions || []).slice(0, 5).map((item) => chip(\`\${item.label} (\${item.count})\`)).join('') || '<span class="muted">No emotion labels available.</span>'}
+              </div>
+            </div>
+            <div>
+              <h2>Top Topics</h2>
+              <div class="chips">
+                \${(stimulus.topTopics || []).slice(0, 5).map((item) => chip(\`\${item.label} (\${item.count})\`)).join('') || '<span class="muted">No topic labels available.</span>'}
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap" style="margin-top: 14px;">
+            <table>
+              <thead>
