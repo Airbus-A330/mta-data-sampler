@@ -982,3 +982,16 @@ function buildHtml(analysis) {
 
     function renderGlobalSections() {
       topBarList(elements.globalEmotions, (analysis.globalSummary.topEmotions || []).slice(0, 8));
+      topBarList(elements.globalTopics, (analysis.globalSummary.topTopics || []).slice(0, 8));
+      topBarList(elements.globalModalities, analysis.globalSummary.modalityBreakdown || []);
+    }
+
+    function renderDevMode() {
+      const selectedStation = stations.find((item) => item.stationKey === state.selectedStationKey) || null;
+      const commandFilters = parseDevCommand(state.devCommand);
+
+      const filtered = sortExposures(
+        allExposures.filter((exposure) => {
+          if (state.devScope === 'selected' && selectedStation && exposure.stationKey !== selectedStation.stationKey) {
+            return false;
+          }
