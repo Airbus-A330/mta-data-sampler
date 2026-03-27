@@ -995,3 +995,16 @@ function buildHtml(analysis) {
           if (state.devScope === 'selected' && selectedStation && exposure.stationKey !== selectedStation.stationKey) {
             return false;
           }
+
+          if (commandFilters.station) {
+            const stationNeedle = normalizeText(commandFilters.station);
+            const haystack = normalizeText([exposure.stationName, exposure.stationLineGroup].join(' '));
+            if (!haystack.includes(stationNeedle)) return false;
+          }
+
+          if (commandFilters.type && normalizeText(exposure.stimulusType) !== normalizeText(commandFilters.type)) return false;
+          if (commandFilters.participant && !normalizeText(exposure.participantId).includes(normalizeText(commandFilters.participant))) return false;
+          if (commandFilters.emotion && !hasMatchingLabel(exposure.feelings?.emotionLabels, commandFilters.emotion)) return false;
+          if (commandFilters.topic && !hasMatchingLabel(exposure.feelings?.topicLabels, commandFilters.topic)) return false;
+          if (commandFilters.mincomfort && exposure.comfort < Number(commandFilters.mincomfort)) return false;
+          if (commandFilters.minsafety && exposure.safety < Number(commandFilters.minsafety)) return false;
