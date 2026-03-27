@@ -969,3 +969,16 @@ function buildHtml(analysis) {
                     <td>\${exposure.safety}</td>
                     <td>\${formatNumber(exposure.satisfactionScore)}</td>
                     <td>\${formatNumber(exposure.phase1StressProxy)}</td>
+                    <td>\${exposure.feelings.rawText || 'n/a'}</td>
+                    <td>\${formatDate(exposure.timings.startDate)}</td>
+                  </tr>
+                \`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      \`).join('') : '<div class="muted">No stimuli match the current filters for this station.</div>';
+    }
+
+    function renderGlobalSections() {
+      topBarList(elements.globalEmotions, (analysis.globalSummary.topEmotions || []).slice(0, 8));
