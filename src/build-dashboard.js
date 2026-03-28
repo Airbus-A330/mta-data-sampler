@@ -1046,3 +1046,16 @@ function buildHtml(analysis) {
               <td>\${exposure.comfort}</td>
               <td>\${exposure.safety}</td>
               <td>\${formatNumber(exposure.satisfactionScore)}</td>
+              <td>\${formatNumber(exposure.phase1StressProxy)}</td>
+              <td>\${(exposure.feelings?.emotionLabels || []).map((item) => item.label).join(', ') || 'n/a'}</td>
+              <td>\${(exposure.feelings?.topicLabels || []).map((item) => item.label).join(', ') || 'n/a'}</td>
+              <td>\${exposure.feelings?.rawText || 'n/a'}</td>
+              <td>\${formatDate(exposure.timings?.startDate)}</td>
+            </tr>
+          \`).join('')
+        : '<tr><td colspan="12" class="muted">No raw exposure rows match the current filters.</td></tr>';
+    }
+
+    function setActiveTab(tabId) {
+      elements.tabButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.tab === tabId);
