@@ -1033,3 +1033,16 @@ function buildHtml(analysis) {
         chip(\`Showing: \${visible.length}\`),
         chip(\`Sort: \${commandFilters.sort || state.devSort}\`),
         chip(\`Scope: \${state.devScope === 'selected' ? 'selected station' : 'all stations'}\`),
+        chip(\`Command: \${state.devCommand || 'none'}\`),
+      ].join('');
+
+      elements.devTableBody.innerHTML = visible.length
+        ? visible.map((exposure) => \`
+            <tr>
+              <td>\${exposure.stationName}</td>
+              <td>\${exposure.stimulusId}</td>
+              <td>\${exposure.stimulusType}</td>
+              <td>\${exposure.participantId}</td>
+              <td>\${exposure.comfort}</td>
+              <td>\${exposure.safety}</td>
+              <td>\${formatNumber(exposure.satisfactionScore)}</td>
