@@ -1021,3 +1021,15 @@ function buildHtml(analysis) {
           }
 
           return true;
+        }),
+        commandFilters.sort || state.devSort,
+      );
+
+      const limit = Number(commandFilters.limit || state.devLimit || 25);
+      const visible = filtered.slice(0, limit);
+
+      elements.devSummary.innerHTML = [
+        chip(\`Matched rows: \${filtered.length}\`),
+        chip(\`Showing: \${visible.length}\`),
+        chip(\`Sort: \${commandFilters.sort || state.devSort}\`),
+        chip(\`Scope: \${state.devScope === 'selected' ? 'selected station' : 'all stations'}\`),
