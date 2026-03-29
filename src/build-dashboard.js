@@ -1072,3 +1072,16 @@ function buildHtml(analysis) {
         refreshStationFilters();
         renderStationList();
         renderSelectedStation();
+        renderDevMode();
+      });
+
+      elements.stationSort.addEventListener('change', (event) => {
+        state.stationSort = event.target.value;
+        refreshStationFilters();
+        renderStationList();
+        renderSelectedStation();
+        renderDevMode();
+      });
+
+      elements.stationTypeFilter.addEventListener('change', (event) => {
+        state.stationTypeFilter = event.target.value;
