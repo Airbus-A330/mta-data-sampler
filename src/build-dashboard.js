@@ -1124,3 +1124,16 @@ function buildHtml(analysis) {
         state.topicFilter = event.target.value;
         renderSelectedStation();
       });
+
+      elements.tableSort.addEventListener('change', (event) => {
+        state.tableSort = event.target.value;
+        renderStationTable();
+      });
+
+      elements.tableModalityFilter.addEventListener('change', (event) => {
+        state.tableModalityFilter = event.target.value;
+        renderStationTable();
+      });
+
+      elements.tableEmotionFilter.addEventListener('change', (event) => {
+        state.tableEmotionFilter = event.target.value;
