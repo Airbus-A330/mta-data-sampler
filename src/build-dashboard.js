@@ -1149,3 +1149,17 @@ function buildHtml(analysis) {
         state.devCommand = event.target.value;
         renderDevMode();
       });
+
+      elements.devSort.addEventListener('change', (event) => {
+        state.devSort = event.target.value;
+        renderDevMode();
+      });
+
+      elements.devLimit.addEventListener('change', (event) => {
+        state.devLimit = Number(event.target.value);
+        renderDevMode();
+      });
+
+      elements.devStationScope.addEventListener('change', (event) => {
+        state.devScope = event.target.value;
+        renderDevMode();
