@@ -1176,3 +1176,16 @@ function buildHtml(analysis) {
       elements.tableModalityFilter.value = state.tableModalityFilter;
       elements.devSort.value = state.devSort;
       elements.devLimit.value = String(state.devLimit);
+      elements.devStationScope.value = state.devScope;
+      populateFilterOptions();
+      populateDevCommandSuggestions();
+      refreshStationFilters();
+      elements.generatedAt.textContent = formatDate(analysis.metadata.generatedAt);
+      elements.runtime.textContent = analysis.metadata.runtime;
+      renderSummaryCards();
+      renderGlobalSections();
+      renderStationTable();
+      renderStationList();
+      renderSelectedStation();
+      renderDevMode();
+      bindEvents();
