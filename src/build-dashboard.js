@@ -710,3 +710,519 @@ function buildHtml(analysis) {
       if (!state.filteredStations.some((station) => station.stationKey === state.selectedStationKey)) {
         state.selectedStationKey = state.filteredStations[0]?.stationKey ?? stations[0]?.stationKey ?? null;
       }
+    }
+
+    function populateFilterOptions() {
+      const emotionMap = new Map();
+      const topicMap = new Map();
+
+      stations.forEach((station) => {
+        (station.topEmotions || []).forEach((item) => {
+          if (!emotionMap.has(item.id)) emotionMap.set(item.id, item.label);
+        });
+        (station.topTopics || []).forEach((item) => {
+          if (!topicMap.has(item.id)) topicMap.set(item.id, item.label);
+        });
+      });
+
+      const emotionOptions = [...emotionMap.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+      const topicOptions = [...topicMap.entries()].sort((a, b) => a[1].localeCompare(b[1]));
+
+      const optionMarkup = (options, firstLabel) =>
+        ['<option value="all">' + firstLabel + '</option>']
+          .concat(options.map(([id, label]) => '<option value="' + id + '">' + label + '</option>'))
+          .join('');
+
+      elements.emotionFilter.innerHTML = optionMarkup(emotionOptions, 'Emotion filter: All');
+      elements.topicFilter.innerHTML = optionMarkup(topicOptions, 'Topic filter: All');
+      elements.tableEmotionFilter.innerHTML = optionMarkup(emotionOptions, 'Table emotion: All');
+      elements.tableTopicFilter.innerHTML = optionMarkup(topicOptions, 'Table topic: All');
+    }
+
+    function topBarList(target, items, countField = 'count') {
+      const max = Math.max(...items.map((item) => Number(item[countField]) || 0), 1);
+      target.innerHTML = items.length
+        ? items.map((item) => {
+            const value = Number(item[countField]) || 0;
+            return \`
+              <div class="bar-row">
+                <div class="bar-meta">
+                  <span>\${item.label}</span>
+                  <span class="muted">\${formatNumber(value, 0)}</span>
+                </div>
+                <div class="bar-track"><div class="bar-fill" style="width:\${(value / max) * 100}%"></div></div>
+              </div>\`;
+          }).join('')
+        : '<div class="muted">No data available.</div>';
+    }
+
+    function renderSummaryCards() {
+      const counts = analysis.metadata.recordCounts;
+      const global = analysis.globalSummary;
+
+      const cards = [
+        ['CSV Rows', counts.csvRows],
+        ['Valid Exposures', counts.validExposures],
+        ['Unique Participants', counts.uniqueParticipants],
+        ['Observed Stations', counts.uniqueStations],
+        ['Observed Stimuli', counts.uniqueStimuli],
+        ['Avg Satisfaction', formatNumber(global.satisfactionScore.average)],
+        ['Avg Phase I Stress', formatNumber(global.phase1Stress.average)],
+        ['Uncategorized Affect', global.uncategorizedAffectResponses],
+      ];
+
+      elements.summaryCards.innerHTML = cards.map(([label, value]) => \`
+        <div class="panel stat-card">
+          <div class="stat-label">\${label}</div>
+          <div class="stat-value">\${value}</div>
+        </div>
+      \`).join('');
+    }
+
+    function renderStationList() {
+      elements.stationList.innerHTML = state.filteredStations.map((station) => \`
+        <button class="station-button \${station.stationKey === state.selectedStationKey ? 'active' : ''}" data-station-key="\${station.stationKey}">
+          <strong>\${station.stationName}</strong>
+          <small>
+            <span>\${station.responseCount} responses</span>
+            <span>SIS \${formatNumber(station.aggregateMetrics.subliminalIndexScore.value)}</span>
+          </small>
+        </button>
+      \`).join('');
+
+      elements.stationList.querySelectorAll('[data-station-key]').forEach((button) => {
+        button.addEventListener('click', () => {
+          state.selectedStationKey = button.dataset.stationKey;
+          renderStationList();
+          renderSelectedStation();
+          renderDevMode();
+        });
+      });
+    }
+
+    function renderStationTable() {
+      const filteredStations = sortStations(
+        stations.filter((station) => {
+          const modality = getStationModalities(station);
+          const matchesModality = state.tableModalityFilter === 'all' || modality === state.tableModalityFilter;
+          const matchesEmotion = includesTopLabel(station.topEmotions, state.tableEmotionFilter);
+          const matchesTopic = includesTopLabel(station.topTopics, state.tableTopicFilter);
+          return matchesModality && matchesEmotion && matchesTopic;
+        }),
+        state.tableSort,
+      );
+
+      elements.stationsTableBody.innerHTML = filteredStations
+        .map((station) => \`
+          <tr>
+            <td>\${station.stationName}</td>
+            <td>\${station.responseCount}</td>
+            <td>\${station.participantCount}</td>
+            <td>\${formatNumber(station.aggregateMetrics.comfort.average)}</td>
+            <td>\${formatNumber(station.aggregateMetrics.safety.average)}</td>
+            <td>\${formatNumber(station.aggregateMetrics.satisfactionScore.average)}</td>
+            <td>\${formatNumber(station.aggregateMetrics.subliminalIndexScore.value)}</td>
+            <td>\${station.topEmotions[0]?.label || 'n/a'}</td>
+          </tr>
+        \`).join('');
+    }
+
+    function metricTile(label, value, tone = '') {
+      return \`
+        <div class="metric-tile">
+          <div class="label">\${label}</div>
+          <div class="value \${tone}">\${value}</div>
+        </div>\`;
+    }
+
+    function chip(text, className = '') {
+      return \`<span class="chip \${className}">\${text}</span>\`;
+    }
+
+    function renderDemographicStack(target, title, rows) {
+      target.innerHTML += \`
+        <div>
+          <h2>\${title}</h2>
+          <div class="bar-list">
+            \${rows.length
+              ? rows.map((row) => \`
+                  <div class="bar-row">
+                    <div class="bar-meta">
+                      <span>\${row.label}</span>
+                      <span class="muted">\${row.count}</span>
+                    </div>
+                    <div class="bar-track">
+                      <div class="bar-fill" style="width:\${Math.max(8, (row.count / Math.max(...rows.map((item) => item.count), 1)) * 100)}%"></div>
+                    </div>
+                  </div>
+                \`).join('')
+              : '<div class="muted">No demographic data available.</div>'}
+          </div>
+        </div>\`;
+    }
+
+    function renderSelectedStation() {
+      const station = stations.find((item) => item.stationKey === state.selectedStationKey) || stations[0];
+      if (!station) return;
+
+      elements.stationTitle.textContent = station.stationName;
+      elements.stationSubtitle.textContent = \`\${station.stationMetadata.complexName} · \${station.stationMetadata.lineGroup || 'Unknown line group'}\`;
+      elements.stationChips.innerHTML = [
+        chip(\`\${station.responseCount} responses\`),
+        chip(\`\${station.participantCount} participants\`),
+        chip(\`\${station.stationMetadata.stimulusIds.length} stimuli\`),
+        chip(station.mostPositiveEmotion ? \`Most positive: \${station.mostPositiveEmotion.label}\` : 'Most positive: n/a', 'positive'),
+        chip(station.mostNegativeEmotion ? \`Most negative: \${station.mostNegativeEmotion.label}\` : 'Most negative: n/a', 'negative'),
+      ].join('');
+
+      const sis = station.aggregateMetrics.subliminalIndexScore.value;
+      const tone = sis > 0.75 ? 'negative' : sis < -0.75 ? 'positive' : 'warning';
+      elements.stationHealth.innerHTML = chip(\`SIS \${formatNumber(sis)}\`, tone);
+
+      elements.stationMetrics.innerHTML = [
+        metricTile('Avg Comfort', formatNumber(station.aggregateMetrics.comfort.average)),
+        metricTile('Avg Safety', formatNumber(station.aggregateMetrics.safety.average)),
+        metricTile('Avg Satisfaction', formatNumber(station.aggregateMetrics.satisfactionScore.average)),
+        metricTile('Phase I Stress', formatNumber(station.aggregateMetrics.phase1Stress.average)),
+        metricTile('Affect Valence', formatNumber(station.aggregateMetrics.affectValence.average)),
+        metricTile('Affect Arousal', formatNumber(station.aggregateMetrics.affectArousal.average)),
+        metricTile('SIS', formatNumber(sis), tone),
+        metricTile('Uncategorized Affect', String(station.dataQuality.uncategorizedAffectResponses)),
+      ].join('');
+
+      topBarList(elements.stationEmotions, station.topEmotions.slice(0, 5));
+      topBarList(elements.stationTopics, station.topTopics.slice(0, 5));
+
+      elements.stationQuality.innerHTML = [
+        chip(\`Uncategorized: \${station.dataQuality.uncategorizedAffectResponses}\`),
+        chip(\`Empty affect: \${station.dataQuality.emptyAffectResponses}\`),
+        chip(\`Avg token count: \${formatNumber(station.dataQuality.averageAffectTokenCount, 2)}\`),
+      ].join('');
+
+      elements.demographicsLeft.innerHTML = '';
+      elements.demographicsRight.innerHTML = '';
+      renderDemographicStack(elements.demographicsLeft, 'Age Groups', station.participantProfile.ageGroups || []);
+      renderDemographicStack(elements.demographicsLeft, 'Gender', station.participantProfile.genders || []);
+      renderDemographicStack(elements.demographicsRight, 'Ethnicity', station.participantProfile.ethnicities || []);
+      renderDemographicStack(elements.demographicsRight, 'Subway Frequency', station.participantProfile.subwayFrequency || []);
+
+      const visibleStimuli = sortStimuli(
+        (station.stimuli || []).filter((stimulus) => {
+          const primaryType = stimulus.stimulusTypes?.length > 1 ? 'mixed' : (stimulus.stimulusTypes?.[0] || 'unknown');
+          const matchesType =
+            state.stimulusTypeFilter === 'all' ||
+            stimulus.stimulusTypes?.includes(state.stimulusTypeFilter) ||
+            primaryType === state.stimulusTypeFilter;
+          const matchesEmotion = includesTopLabel(stimulus.topEmotions, state.emotionFilter);
+          const matchesTopic = includesTopLabel(stimulus.topTopics, state.topicFilter);
+          return matchesType && matchesEmotion && matchesTopic;
+        }),
+        state.stimulusSort,
+      );
+
+      elements.stimuliGrid.innerHTML = visibleStimuli.length ? visibleStimuli.map((stimulus) => \`
+        <article class="stimulus-card">
+          <div class="stimulus-header">
+            <div>
+              <h4>Stimulus \${stimulus.stimulusId}</h4>
+              <div class="chips">
+                \${(stimulus.stimulusTypes || []).map((type) => chip(type)).join('')}
+                \${chip(\`\${stimulus.responseCount} responses\`)}
+                \${chip(\`\${stimulus.participantCount} participants\`)}
+              </div>
+            </div>
+            <div class="pill">SIS \${formatNumber(stimulus.aggregateMetrics.subliminalIndexScore.value)}</div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini"><div class="k">Comfort</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.comfort.average)}</div></div>
+            <div class="mini"><div class="k">Safety</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.safety.average)}</div></div>
+            <div class="mini"><div class="k">Satisfaction</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.satisfactionScore.average)}</div></div>
+            <div class="mini"><div class="k">Stress</div><div class="v">\${formatNumber(stimulus.aggregateMetrics.phase1Stress.average)}</div></div>
+          </div>
+          <div class="dual-grid">
+            <div>
+              <h2>Top Emotions</h2>
+              <div class="chips">
+                \${(stimulus.topEmotions || []).slice(0, 5).map((item) => chip(\`\${item.label} (\${item.count})\`)).join('') || '<span class="muted">No emotion labels available.</span>'}
+              </div>
+            </div>
+            <div>
+              <h2>Top Topics</h2>
+              <div class="chips">
+                \${(stimulus.topTopics || []).slice(0, 5).map((item) => chip(\`\${item.label} (\${item.count})\`)).join('') || '<span class="muted">No topic labels available.</span>'}
+              </div>
+            </div>
+          </div>
+          <div class="table-wrap" style="margin-top: 14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Participant</th><th>Type</th><th>Comfort</th><th>Safety</th><th>Satisfaction</th><th>Stress</th><th>Feeling</th><th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                \${(stimulus.exposures || []).map((exposure) => \`
+                  <tr>
+                    <td>\${exposure.participantId}</td>
+                    <td>\${exposure.stimulusType}</td>
+                    <td>\${exposure.comfort}</td>
+                    <td>\${exposure.safety}</td>
+                    <td>\${formatNumber(exposure.satisfactionScore)}</td>
+                    <td>\${formatNumber(exposure.phase1StressProxy)}</td>
+                    <td>\${exposure.feelings.rawText || 'n/a'}</td>
+                    <td>\${formatDate(exposure.timings.startDate)}</td>
+                  </tr>
+                \`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      \`).join('') : '<div class="muted">No stimuli match the current filters for this station.</div>';
+    }
+
+    function renderGlobalSections() {
+      topBarList(elements.globalEmotions, (analysis.globalSummary.topEmotions || []).slice(0, 8));
+      topBarList(elements.globalTopics, (analysis.globalSummary.topTopics || []).slice(0, 8));
+      topBarList(elements.globalModalities, analysis.globalSummary.modalityBreakdown || []);
+    }
+
+    function renderDevMode() {
+      const selectedStation = stations.find((item) => item.stationKey === state.selectedStationKey) || null;
+      const commandFilters = parseDevCommand(state.devCommand);
+
+      const filtered = sortExposures(
+        allExposures.filter((exposure) => {
+          if (state.devScope === 'selected' && selectedStation && exposure.stationKey !== selectedStation.stationKey) {
+            return false;
+          }
+
+          if (commandFilters.station) {
+            const stationNeedle = normalizeText(commandFilters.station);
+            const haystack = normalizeText([exposure.stationName, exposure.stationLineGroup].join(' '));
+            if (!haystack.includes(stationNeedle)) return false;
+          }
+
+          if (commandFilters.type && normalizeText(exposure.stimulusType) !== normalizeText(commandFilters.type)) return false;
+          if (commandFilters.participant && !normalizeText(exposure.participantId).includes(normalizeText(commandFilters.participant))) return false;
+          if (commandFilters.emotion && !hasMatchingLabel(exposure.feelings?.emotionLabels, commandFilters.emotion)) return false;
+          if (commandFilters.topic && !hasMatchingLabel(exposure.feelings?.topicLabels, commandFilters.topic)) return false;
+          if (commandFilters.mincomfort && exposure.comfort < Number(commandFilters.mincomfort)) return false;
+          if (commandFilters.minsafety && exposure.safety < Number(commandFilters.minsafety)) return false;
+          if (commandFilters.text) {
+            const haystack = normalizeText([
+              exposure.stationName,
+              exposure.stimulusType,
+              exposure.participantId,
+              exposure.feelings?.rawText,
+              ...(exposure.feelings?.emotionLabels || []).map((item) => item.label),
+              ...(exposure.feelings?.topicLabels || []).map((item) => item.label),
+            ].join(' '));
+            if (!haystack.includes(normalizeText(commandFilters.text))) return false;
+          }
+
+          return true;
+        }),
+        commandFilters.sort || state.devSort,
+      );
+
+      const limit = Number(commandFilters.limit || state.devLimit || 25);
+      const visible = filtered.slice(0, limit);
+
+      elements.devSummary.innerHTML = [
+        chip(\`Matched rows: \${filtered.length}\`),
+        chip(\`Showing: \${visible.length}\`),
+        chip(\`Sort: \${commandFilters.sort || state.devSort}\`),
+        chip(\`Scope: \${state.devScope === 'selected' ? 'selected station' : 'all stations'}\`),
+        chip(\`Command: \${state.devCommand || 'none'}\`),
+      ].join('');
+
+      elements.devTableBody.innerHTML = visible.length
+        ? visible.map((exposure) => \`
+            <tr>
+              <td>\${exposure.stationName}</td>
+              <td>\${exposure.stimulusId}</td>
+              <td>\${exposure.stimulusType}</td>
+              <td>\${exposure.participantId}</td>
+              <td>\${exposure.comfort}</td>
+              <td>\${exposure.safety}</td>
+              <td>\${formatNumber(exposure.satisfactionScore)}</td>
+              <td>\${formatNumber(exposure.phase1StressProxy)}</td>
+              <td>\${(exposure.feelings?.emotionLabels || []).map((item) => item.label).join(', ') || 'n/a'}</td>
+              <td>\${(exposure.feelings?.topicLabels || []).map((item) => item.label).join(', ') || 'n/a'}</td>
+              <td>\${exposure.feelings?.rawText || 'n/a'}</td>
+              <td>\${formatDate(exposure.timings?.startDate)}</td>
+            </tr>
+          \`).join('')
+        : '<tr><td colspan="12" class="muted">No raw exposure rows match the current filters.</td></tr>';
+    }
+
+    function setActiveTab(tabId) {
+      elements.tabButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.tab === tabId);
+      });
+
+      elements.tabPanels.forEach((panel) => {
+        panel.classList.toggle('active', panel.id === \`tab-\${tabId}\`);
+      });
+    }
+
+    function bindEvents() {
+      elements.stationSearch.addEventListener('input', (event) => {
+        void event;
+        refreshStationFilters();
+        renderStationList();
+        renderSelectedStation();
+        renderDevMode();
+      });
+
+      elements.stationSort.addEventListener('change', (event) => {
+        state.stationSort = event.target.value;
+        refreshStationFilters();
+        renderStationList();
+        renderSelectedStation();
+        renderDevMode();
+      });
+
+      elements.stationTypeFilter.addEventListener('change', (event) => {
+        state.stationTypeFilter = event.target.value;
+        refreshStationFilters();
+        renderStationList();
+        renderSelectedStation();
+        renderDevMode();
+      });
+
+      elements.themeToggle.addEventListener('click', () => {
+        applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+      });
+
+      elements.jumpToStations.addEventListener('click', () => {
+        document.getElementById('stations-anchor').scrollIntoView({ behavior: 'smooth' });
+      });
+
+      elements.tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          setActiveTab(button.dataset.tab);
+        });
+      });
+
+      elements.stimulusTypeFilter.addEventListener('change', (event) => {
+        state.stimulusTypeFilter = event.target.value;
+        renderSelectedStation();
+      });
+
+      elements.stimulusSort.addEventListener('change', (event) => {
+        state.stimulusSort = event.target.value;
+        renderSelectedStation();
+      });
+
+      elements.emotionFilter.addEventListener('change', (event) => {
+        state.emotionFilter = event.target.value;
+        renderSelectedStation();
+      });
+
+      elements.topicFilter.addEventListener('change', (event) => {
+        state.topicFilter = event.target.value;
+        renderSelectedStation();
+      });
+
+      elements.tableSort.addEventListener('change', (event) => {
+        state.tableSort = event.target.value;
+        renderStationTable();
+      });
+
+      elements.tableModalityFilter.addEventListener('change', (event) => {
+        state.tableModalityFilter = event.target.value;
+        renderStationTable();
+      });
+
+      elements.tableEmotionFilter.addEventListener('change', (event) => {
+        state.tableEmotionFilter = event.target.value;
+        renderStationTable();
+      });
+
+      elements.tableTopicFilter.addEventListener('change', (event) => {
+        state.tableTopicFilter = event.target.value;
+        renderStationTable();
+      });
+
+      elements.devCommand.addEventListener('input', (event) => {
+        state.devCommand = event.target.value;
+        renderDevMode();
+      });
+
+      elements.devSort.addEventListener('change', (event) => {
+        state.devSort = event.target.value;
+        renderDevMode();
+      });
+
+      elements.devLimit.addEventListener('change', (event) => {
+        state.devLimit = Number(event.target.value);
+        renderDevMode();
+      });
+
+      elements.devStationScope.addEventListener('change', (event) => {
+        state.devScope = event.target.value;
+        renderDevMode();
+      });
+    }
+
+    function init() {
+      applyTheme(state.theme);
+      elements.stationSort.value = state.stationSort;
+      elements.stationTypeFilter.value = state.stationTypeFilter;
+      elements.stimulusTypeFilter.value = state.stimulusTypeFilter;
+      elements.stimulusSort.value = state.stimulusSort;
+      elements.tableSort.value = state.tableSort;
+      elements.tableModalityFilter.value = state.tableModalityFilter;
+      elements.devSort.value = state.devSort;
+      elements.devLimit.value = String(state.devLimit);
+      elements.devStationScope.value = state.devScope;
+      populateFilterOptions();
+      populateDevCommandSuggestions();
+      refreshStationFilters();
+      elements.generatedAt.textContent = formatDate(analysis.metadata.generatedAt);
+      elements.runtime.textContent = analysis.metadata.runtime;
+      renderSummaryCards();
+      renderGlobalSections();
+      renderStationTable();
+      renderStationList();
+      renderSelectedStation();
+      renderDevMode();
+      bindEvents();
+    }
+
+    init();
+  </script>
+</body>
+</html>`;
+}
+
+/**
+ * Main dashboard build entry point.
+ */
+function main() {
+  logger.section('Subliminal Spaces Dashboard Build');
+  logger.step('Loading analysis artifact');
+  logger.metric('Input JSON', INPUT_JSON_PATH);
+  logger.metric('Output HTML', OUTPUT_HTML_PATH);
+  logger.blank();
+
+  const analysis = readJson(INPUT_JSON_PATH);
+
+  logger.section('Dashboard Source Summary');
+  logger.metric('Stations available', analysis.metadata.recordCounts.uniqueStations);
+  logger.metric('Stimuli available', analysis.metadata.recordCounts.uniqueStimuli);
+  logger.metric('Participants', analysis.metadata.recordCounts.uniqueParticipants);
+  logger.metric('Exposures', analysis.metadata.recordCounts.validExposures);
+  logger.blank();
+
+  const html = buildHtml(analysis);
+  ensureDirectory(path.dirname(OUTPUT_HTML_PATH));
+  fs.writeFileSync(OUTPUT_HTML_PATH, html, 'utf8');
+
+  logger.section('Dashboard Build Complete');
+  logger.metric('HTML written', OUTPUT_HTML_PATH);
+  logger.metric('File size (KB)', logger.formatNumber(Buffer.byteLength(html, 'utf8') / 1024, 1));
+}
+
+main();
