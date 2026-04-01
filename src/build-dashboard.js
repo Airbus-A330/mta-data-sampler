@@ -1215,3 +1215,14 @@ function main() {
   logger.metric('Participants', analysis.metadata.recordCounts.uniqueParticipants);
   logger.metric('Exposures', analysis.metadata.recordCounts.validExposures);
   logger.blank();
+
+  const html = buildHtml(analysis);
+  ensureDirectory(path.dirname(OUTPUT_HTML_PATH));
+  fs.writeFileSync(OUTPUT_HTML_PATH, html, 'utf8');
+
+  logger.section('Dashboard Build Complete');
+  logger.metric('HTML written', OUTPUT_HTML_PATH);
+  logger.metric('File size (KB)', logger.formatNumber(Buffer.byteLength(html, 'utf8') / 1024, 1));
+}
+
+main();
